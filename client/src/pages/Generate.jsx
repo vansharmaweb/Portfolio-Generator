@@ -65,8 +65,8 @@ export default function Generate() {
 
         {/* Preview Panel */}
         <div 
-          className={`w-full lg:w-[55%] h-full overflow-y-auto bg-[#0a0f1d] custom-scrollbar relative ${
-            activeTab === 'preview' ? 'block' : 'hidden lg:block'
+          className={`w-full lg:w-[55%] h-full flex flex-col overflow-hidden bg-[#0a0f1d] ${
+            activeTab === 'preview' ? 'flex' : 'hidden lg:flex'
           }`}
         >
           <Preview data={data} currentTheme={currentTheme} setCurrentTheme={setCurrentTheme} />

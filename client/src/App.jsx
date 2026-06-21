@@ -23,8 +23,7 @@ function App() {
       {/* ── Navbar ── */}
       <nav className="w-full px-6 py-4 flex items-center justify-between border-b border-slate-800 bg-slate-900/50 backdrop-blur-md sticky top-0 z-50">
         <div className="flex items-center gap-3">
-          <img src="/logo.png" alt="PortfolioGen" className="w-10 h-10 object-contain drop-shadow-[0_0_8px_rgba(34,211,238,0.5)]" />
-          <span className="font-bold text-xl tracking-tight text-white/90">PortfolioGen</span>
+          <img src="/logo.png" alt="PortfolioGen" className="h-8 md:h-10 w-auto object-contain drop-shadow-[0_0_8px_rgba(34,211,238,0.5)]" />
         </div>
 
         {/* Creator badge — centre */}
@@ -68,8 +67,7 @@ function App() {
           {/* Left: Branding */}
           <div className="flex flex-col items-center md:items-start gap-1">
             <div className="flex items-center gap-2">
-              <img src="/logo.png" alt="PortfolioGen" className="w-6 h-6 object-contain" />
-              <span className="font-bold text-white/80 text-sm">PortfolioGen</span>
+              <img src="/logo.png" alt="PortfolioGen" className="h-6 w-auto object-contain" />
             </div>
             <p className="text-slate-500 text-xs">
               Build stunning developer portfolios in seconds.
