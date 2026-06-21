@@ -1,5 +1,5 @@
 {
-  "name": "portfolio-generator",
+  "name": "portfoliogen",
   "compatibility_date": "2026-04-18",
   "assets": {
     "directory": "client/dist"
