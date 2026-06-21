@@ -1,5 +1,6 @@
 import { Plus, Trash2 } from 'lucide-react';
 import GithubImporter from './GithubImporter';
+import AiBioGenerator from './AiBioGenerator';
 
 export default function Form({ data, setData }) {
   const handleChange = (e) => {
@@ -49,12 +50,18 @@ export default function Form({ data, setData }) {
           <Input label="Phone Number" type="tel" name="phone" value={data.phone} onChange={handleChange} placeholder="+1 234 567 890" />
         </div>
         <div className="space-y-2">
-          <label className="text-sm font-medium text-slate-300">About Me</label>
+          <div className="flex items-center justify-between gap-3">
+            <label className="text-sm font-medium text-slate-300">About Me</label>
+            <AiBioGenerator
+              data={data}
+              onBioGenerated={(bio) => setData(prev => ({ ...prev, about: bio }))}
+            />
+          </div>
           <textarea
             name="about"
             value={data.about}
             onChange={handleChange}
-            placeholder="Tell us about yourself..."
+            placeholder="Tell us about yourself, or click ✦ AI Generate above…"
             className="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-white focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-colors h-32 resize-none"
           />
         </div>

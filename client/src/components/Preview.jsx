@@ -6,8 +6,8 @@ import TerminalTemplate from './PortfolioTemplates/TerminalTheme';
 import CreativeTemplate from './PortfolioTemplates/Creative';
 import TemplateSelector from './TemplateSelector';
 import DeployModal from './DeployModal';
-import { Download, Rocket, FileCode2, Code } from 'lucide-react';
-import { exportPortfolio, exportStandaloneHtml } from '../utils/exportPortfolio';
+import { Download, Rocket, FileCode2, Code, FileText } from 'lucide-react';
+import { exportPortfolio, exportStandaloneHtml, exportAsPdf } from '../utils/exportPortfolio';
 import { exportReadme } from '../utils/markdownExport';
 
 export default function Preview({ data, currentTheme, setCurrentTheme }) {
@@ -58,6 +58,14 @@ export default function Preview({ data, currentTheme, setCurrentTheme }) {
             >
               <FileCode2 className="w-3.5 h-3.5" />
               <span className="text-xs font-medium hidden sm:inline">README</span>
+            </button>
+            <button
+              onClick={() => exportAsPdf(data)}
+              title="Export as PDF Resume"
+              className="group flex items-center gap-1.5 px-3 py-1.5 text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 transition-all duration-150 border-r border-white/10"
+            >
+              <FileText className="w-3.5 h-3.5" />
+              <span className="text-xs font-medium hidden sm:inline">PDF</span>
             </button>
             <button
               onClick={handleExportZip}

@@ -34,6 +34,85 @@ export function exportStandaloneHtml(data, theme) {
   saveAs(blob, `portfolio_${data.name.replace(/\s+/g, '_')}.html`);
 }
 
+export function exportAsPdf(data) {
+  const e = (str) => {
+    if (!str) return '';
+    return str.toString().replace(/[&<>'"]/g,
+      tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+    );
+  };
+
+  const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>${e(data.name)} — Resume</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; color: #1a202c; background: #fff; padding: 48px; max-width: 800px; margin: 0 auto; font-size: 14px; line-height: 1.6; }
+    h1 { font-size: 2rem; font-weight: 800; color: #111; margin-bottom: 4px; }
+    .role { font-size: 1rem; color: #7c3aed; font-weight: 600; margin-bottom: 12px; }
+    .contact { display: flex; flex-wrap: wrap; gap: 16px; font-size: 0.8rem; color: #555; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 2px solid #e2e8f0; }
+    .contact a { color: #7c3aed; text-decoration: none; }
+    section { margin-top: 24px; }
+    h2 { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #7c3aed; margin-bottom: 10px; padding-bottom: 4px; border-bottom: 1px solid #e2e8f0; }
+    .about { color: #374151; line-height: 1.8; }
+    .skills { display: flex; flex-wrap: wrap; gap: 8px; }
+    .skill { padding: 3px 10px; background: #f3f0ff; border: 1px solid #ddd6fe; border-radius: 4px; font-size: 0.78rem; color: #5b21b6; font-weight: 500; }
+    .project { margin-top: 14px; padding: 12px 14px; border-left: 3px solid #7c3aed; background: #faf9ff; border-radius: 0 6px 6px 0; }
+    .project h3 { font-size: 0.95rem; font-weight: 700; color: #111; margin-bottom: 4px; }
+    .project p { font-size: 0.82rem; color: #555; }
+    .project a { font-size: 0.78rem; color: #7c3aed; }
+    .footer { margin-top: 32px; padding-top: 16px; border-top: 1px solid #e2e8f0; text-align: center; font-size: 0.7rem; color: #aaa; }
+    @media print { body { padding: 0; } }
+  </style>
+</head>
+<body>
+  <h1>${e(data.name)}</h1>
+  <p class="role">${e(data.role)}</p>
+  <div class="contact">
+    ${data.email ? `<a href="mailto:${e(data.email)}">${e(data.email)}</a>` : ''}
+    ${data.phone ? `<span>${e(data.phone)}</span>` : ''}
+    ${data.github ? `<a href="${e(data.github)}" target="_blank">GitHub</a>` : ''}
+    ${data.linkedin ? `<a href="${e(data.linkedin)}" target="_blank">LinkedIn</a>` : ''}
+  </div>
+
+  ${data.about ? `
+  <section>
+    <h2>About</h2>
+    <p class="about">${e(data.about)}</p>
+  </section>` : ''}
+
+  ${data.skills?.filter(Boolean).length ? `
+  <section>
+    <h2>Skills</h2>
+    <div class="skills">
+      ${data.skills.filter(Boolean).map(s => `<span class="skill">${e(s)}</span>`).join('')}
+    </div>
+  </section>` : ''}
+
+  ${data.projects?.filter(p => p.title || p.description).length ? `
+  <section>
+    <h2>Projects</h2>
+    ${data.projects.filter(p => p.title || p.description).map(p => `
+      <div class="project">
+        <h3>${e(p.title)}</h3>
+        <p>${e(p.description)}</p>
+        ${p.link ? `<a href="${e(p.link)}" target="_blank">${e(p.link)}</a>` : ''}
+      </div>
+    `).join('')}
+  </section>` : ''}
+
+  <p class="footer">Generated with PortfolioGen</p>
+  <script>window.onload = () => window.print();<\/script>
+</body>
+</html>`;
+
+  const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  window.open(url, '_blank');
+}
+
 function getOGTags(data) {
   const siteUrl = data.github || 'https://portfoliogen.example.com';
   return `
