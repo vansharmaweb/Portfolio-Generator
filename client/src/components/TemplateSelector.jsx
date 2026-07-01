@@ -15,13 +15,13 @@ export default function TemplateSelector({ currentTheme, setCurrentTheme }) {
   const active = themes.find(t => t.id === currentTheme);
 
   return (
-    <div className="flex items-center gap-1 bg-white/5 rounded-lg p-1 border border-white/10">
+    <div className="flex items-center gap-1 bg-white/5 rounded-lg p-1 border border-white/10 overflow-x-auto no-scrollbar max-w-[280px] xs:max-w-[360px] sm:max-w-[480px] md:max-w-[600px] lg:max-w-none whitespace-nowrap">
       {themes.map(theme => (
         <button
           key={theme.id}
           onClick={() => setCurrentTheme(theme.id)}
           title={theme.name}
-          className={`relative px-3 py-1.5 rounded-md text-xs font-semibold transition-all duration-200 ${
+          className={`relative px-3 py-1.5 rounded-md text-xs font-semibold transition-all duration-200 shrink-0 ${
             currentTheme === theme.id
               ? 'text-white'
               : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'

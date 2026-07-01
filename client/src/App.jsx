@@ -43,7 +43,7 @@ function App() {
         {/* GitHub link — right */}
         <div className="flex-1 flex justify-end">
           <a
-            href="https://github.com/vansharmaweb"
+            href="https://github.com/vansharmaweb/Portfolio-Generator"
             target="_blank"
             rel="noreferrer"
             className="flex items-center gap-2 px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-slate-600 text-slate-300 hover:text-white transition-all text-sm font-medium shadow-sm w-fit"
@@ -67,7 +67,7 @@ function App() {
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
 
           {/* Left: Branding */}
-          <div className="flex flex-col items-center md:items-start gap-1">
+          <div className="md:flex-1 flex flex-col items-center md:items-start gap-1">
             <div className="flex items-center gap-2">
               <img src="/logo.svg" alt="PortGen" className="h-6 w-auto object-contain" />
             </div>
@@ -77,15 +77,15 @@ function App() {
           </div>
 
           {/* Centre: Made by */}
-          <div className="text-center">
+          <div className="md:flex-1 text-center">
             <p className="text-slate-500 text-xs mb-1">Designed &amp; built by</p>
             <p className="text-white font-bold text-sm tracking-wide">Vansh Sharma</p>
           </div>
 
           {/* Right: Social links */}
-          <div className="flex items-center gap-3">
+          <div className="md:flex-1 flex items-center justify-center md:justify-end gap-3">
             <a
-              href="https://github.com/vansharmaweb"
+              href="https://github.com/vansharmaweb/Portfolio-Generator"
               target="_blank"
               rel="noreferrer"
               className="flex items-center gap-2 px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 hover:text-white transition-all text-sm font-medium"
