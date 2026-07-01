@@ -1,57 +1,102 @@
 <div align="center">
-  <img src="https://raw.githubusercontent.com/VANSH-SHARMA-web/Portfolio-Generator/main/client/public/logo.png" alt="PortfolioGen Logo" width="120" />
-  <h1>PortfolioGen 🚀</h1>
-  <p><strong>A highly customizable, developer-focused portfolio generator and distribution platform built with React and TailwindCSS.</strong></p>
+  <img src="https://raw.githubusercontent.com/VANSH-SHARMA-web/Portfolio-Generator/main/client/public/logo.svg" alt="PortGen Logo" width="220" />
+  <br />
+  <p>
+    <strong>A highly customizable, developer-focused portfolio generator and instant deployment engine built with React and TailwindCSS.</strong>
+  </p>
+
+  <p>
+    <a href="https://github.com/VANSH-SHARMA-web/Portfolio-Generator/blob/main/LICENSE"><img src="https://img.shields.io/github/license/VANSH-SHARMA-web/Portfolio-Generator?color=06b6d4&style=flat-square" alt="License" /></a>
+    <img src="https://img.shields.io/github/stars/VANSH-SHARMA-web/Portfolio-Generator?color=8b5cf6&style=flat-square" alt="Stars" />
+    <img src="https://img.shields.io/github/forks/VANSH-SHARMA-web/Portfolio-Generator?color=d946ef&style=flat-square" alt="Forks" />
+    <img src="https://img.shields.io/badge/React-19-blue?style=flat-square&logo=react&logoColor=61DAFB" alt="React 19" />
+    <img src="https://img.shields.io/badge/TailwindCSS-v4-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white" alt="TailwindCSS v4" />
+    <img src="https://img.shields.io/badge/Vite-v8-646CFF?style=flat-square&logo=vite&logoColor=white" alt="Vite" />
+  </p>
 </div>
 
 ---
 
-PortfolioGen brings portfolios to life instantly. Whether you need to quickly download a sleek, responsive portfolio as a ZIP file or deploy it directly to GitHub Pages with a single click, PortfolioGen gives you absolute control without requiring you to touch any code.
+## 📖 Introduction
 
-## ✨ Elite Features
+**PortGen** is an open-source, framework-independent portfolio builder designed specifically for software engineers, designer developers, and creators. It solves the pain point of creating, designing, and hosting developer portfolios by providing a sleek web-based customizer that compiles and deploys your personalized site to **GitHub Pages in 1-Click** or packages it as a standalone high-performance HTML/ZIP archive—all directly in the browser.
 
-- **🚀 1-Click GitHub Pages Deploy:** Securely insert your GitHub PAT and automatically deploy your portfolio to your `username.github.io` domain right from the browser. Watch the magic happen through our integrated Vercel-style deployment terminal!
-- **📦 Instant Standalone Exports:** Download your generated portfolio as a complete source `.zip` archive or as a highly portable, framework-independent standalone `.html` file. 
-- **🔄 Auto-Import GitHub Repos:** Use the integrated GitHub auto-importer to fetch your public repositories and append them instantly to your portfolio's projects section.
-- **🎨 Premium Interchangeable Themes:** Toggle instantly between beautifully curated templates like **Modern** (deep dark, sleek gradient accents) and **Glass** (immersive translucent panels, ambient background blurs).
-- **🌐 Social SEO Optimization:** Generating your portfolio gracefully injects `OpenGraph` elements `<meta property="og:...">` so that sharing your links on LinkedIn, Twitter, and Discord yields stunning rich-image cards out-of-the-box.
-- **📝 Automated GitHub Profile README:** Hit a button and instantly map your generated portfolio state directly into beautifully formatted Markdown. Paste it straight into your GitHub profile `username/username` repository!
-- **⚡ Real-Time Engine:** See modifications happen live. The desktop UI presents an intuitive side-by-side editing pane, while mobile users get a gracefully optimized Tab mode.
+---
 
-## 🛠️ Tech Stack
+## ✨ Key Features
 
-- **Frontend Environment**: Vite + React 19
-- **Styling**: TailwindCSS v4
-- **State Management**: Lifted React Hooks (`Generate.jsx` orchestration)
-- **APIs Used**: GitHub REST API (Repositories fetching, Authenticated Repo creation, Blob pushing, and Pages triggers).
-- **Tooling**: `jszip`, `file-saver`, `lucide-react`
+- **🚀 1-Click GitHub Pages Deploy:** Authenticate securely using a GitHub Personal Access Token (PAT) and instantly build a new repository or update an existing one. Witness the deployment live with our interactive, terminal-style console logs.
+- **📦 Multi-Format Instant Exports:** 
+  - **Standalone HTML:** Download a single, portable, heavily optimized HTML file with styles fully bundled.
+  - **Source Code ZIP:** Extract a complete React/Vite/Tailwind project structure to run and modify locally on your machine.
+- **🔄 Auto-Import GitHub Repositories:** Speed up portfolio creation by instantly pulling your public GitHub repository list and auto-populating titles, descriptions, and URLs in your projects section.
+- **🎨 Premium Modular Templates:** Toggle between responsive, handcrafted developer templates with real-time CSS rendering:
+  - **Modern:** Deep-slate dark modes with rich gradient accents.
+  - **Glass:** High-end glassmorphism panels, translucent borders, and ambient firefly glow animations.
+  - **Minimal:** Ultra-clean spacing, classic type scales, and black-and-white print layouts.
+  - **Neo-Brutalist:** High-contrast borders, raw layouts, retro neon colors, and offset shadows.
+  - **Terminal:** Retro command-line hacker look with glowing green monospaced typography.
+- **🌐 Social SEO Optimization:** Out-of-the-box OpenGraph `<meta>` tags inject tags dynamically, making your shared links render premium cards on LinkedIn, Twitter/X, Discord, and Slack.
+- **📝 Automatic GitHub Profile README Generator:** Convert your portfolio details into clean, copy-pasteable Markdown optimized for your `username/username` profile README.
 
-## 📁 Repository Structure
+---
 
+## 🛠️ Tech Stack & Architecture
+
+### Frontend
+- **Framework:** React 19 (Functional Components, Lifted Hooks State)
+- **Build Tool:** Vite v8 (Fast HMR & build bundling)
+- **Styling:** TailwindCSS v4 + Custom PostCSS configurations
+- **Icons:** Lucide React
+
+### Deployment & Exports
+- **GitHub API:** Custom client-side integration via `fetch` to create repositories, write files, commit, and enable GitHub Pages configurations.
+- **Compression:** `JSZip` for creating and bundling custom project structures on-the-fly.
+- **Download Handler:** `FileSaver.js` for clean binary downloads in the client.
+
+### Project Structure
 ```text
 portfolio-generator/
-│
-├── client/                 # React Frontend Client
-│   ├── public/             # Static assets (logo)
+├── client/                     # Frontend Application
+│   ├── public/                 # Static assets (logo, favicon)
 │   ├── src/
-│   │   ├── components/     # UI tools (Form, GithubImporter, TemplateSelector, DeployModal)
-│   │   ├── pages/          # Primary App Views (Home, Generate)
-│   │   └── utils/          # Core engines (githubDeploy.js, exportPortfolio.js, markdownExport.js)
-│   └── package.json
-│
-└── server/                 # (Phase 4 Placeholder) Future MongoDB Express Routes
+│   │   ├── components/         # Modular Components
+│   │   │   ├── PortfolioTemplates/  # Template Files (Modern, Glass, etc.)
+│   │   │   ├── CustomizerForm.jsx   # Side-by-side editing settings
+│   │   │   ├── DeployModal.jsx      # GitHub connection interface
+│   │   │   └── GithubImporter.jsx   # Repo fetch controls
+│   │   ├── pages/
+│   │   │   ├── Home.jsx             # Launch page
+│   │   │   └── Generate.jsx         # App Editor Core
+│   │   ├── utils/              # Export & Deploy Engines
+│   │   │   ├── githubDeploy.js      # Octokit-free API client
+│   │   │   ├── exportPortfolio.js   # HTML/ZIP builder
+│   │   │   └── markdownExport.js    # Profile README compiler
+│   │   ├── App.jsx             # Main Router & Layout
+│   │   └── main.jsx            # Entry point
+│   ├── package.json
+│   └── vite.config.js
+└── server/                     # Future backend routes (Phase 4 placeholder)
 ```
+
+---
 
 ## 🧑‍💻 Running Locally
 
-1. **Clone the repository:**
+### Prerequisites
+Make sure you have Node.js (version 18 or above) installed on your system.
+
+### Installation
+
+1. **Clone the Repository:**
    ```bash
    git clone https://github.com/VANSH-SHARMA-web/Portfolio-Generator.git
-   cd Portfolio-Generator/client
+   cd Portfolio-Generator/portfolio-generator
    ```
 
-2. **Install Dependencies:**
+2. **Navigate to the Client Directory and Install Dependencies:**
    ```bash
+   cd client
    npm install
    ```
 
@@ -60,8 +105,23 @@ portfolio-generator/
    npm run dev
    ```
 
-4. Open `http://localhost:5173` on your browser to begin generating your portfolio!
+4. Open your browser and navigate to `http://localhost:5173`.
 
 ---
 
-*Phase 1 through Phase 3 have been successfully implemented. Designed flexibly to prepare for Phase 4 (NodeJS Backend APIs and Authenticated Saved States).*
+## 📋 Roadmap & Future Work
+
+- [x] **Phase 1:** Core Customizer UI, real-time live preview, and text state synchronization.
+- [x] **Phase 2:** Advanced exports (Source ZIP and standalone HTML) + GitHub public repo auto-importer.
+- [x] **Phase 3:** Instant Git-based Pages deployment pipeline with real-time log outputs.
+- [ ] **Phase 4:** Node.js/Express & MongoDB backend integration to save user dashboards, authenticate via OAuth, and host custom domains directly on Cloudflare/Vercel.
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more information.
+
+---
+
+*Designed and engineered with care by [Vansh Sharma](https://github.com/vansharmaweb).*

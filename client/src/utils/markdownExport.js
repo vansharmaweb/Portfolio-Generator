@@ -40,7 +40,7 @@ export function exportReadme(data) {
   }
 
   md.push('---');
-  md.push('*Generated with [PortfolioGen](#)*');
+  md.push('*Generated with [PortGen](#)*');
 
   const mdString = md.join('\n');
   

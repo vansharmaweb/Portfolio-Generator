@@ -4,6 +4,7 @@ import GlassTemplate from './PortfolioTemplates/Glass';
 import MinimalTemplate from './PortfolioTemplates/Minimal';
 import TerminalTemplate from './PortfolioTemplates/TerminalTheme';
 import CreativeTemplate from './PortfolioTemplates/Creative';
+import NeoBrutalistTemplate from './PortfolioTemplates/NeoBrutalist';
 import TemplateSelector from './TemplateSelector';
 import DeployModal from './DeployModal';
 import { Download, Rocket, FileCode2, Code, FileText } from 'lucide-react';
@@ -96,6 +97,7 @@ export default function Preview({ data, currentTheme, setCurrentTheme }) {
         {currentTheme === 'minimal'  && <MinimalTemplate  data={data} />}
         {currentTheme === 'terminal' && <TerminalTemplate data={data} />}
         {currentTheme === 'creative' && <CreativeTemplate data={data} />}
+        {currentTheme === 'neobrutalist' && <NeoBrutalistTemplate data={data} />}
       </div>
 
       <DeployModal

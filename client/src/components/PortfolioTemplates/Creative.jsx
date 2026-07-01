@@ -145,7 +145,7 @@ export default function Creative({ data }) {
 
         {/* Footer */}
         <footer className="pt-8 border-t border-gray-100 text-center">
-          <p className="text-gray-400 text-sm">Built with <span className="font-semibold text-purple-500">PortfolioGen</span></p>
+          <p className="text-gray-400 text-sm">Built with <span className="font-semibold text-purple-500">PortGen</span></p>
         </footer>
       </div>
     </div>

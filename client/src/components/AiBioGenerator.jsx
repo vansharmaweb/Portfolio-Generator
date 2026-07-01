@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Sparkles, Loader2, AlertCircle } from 'lucide-react';
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import Groq from 'groq-sdk';
 
-const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
+const API_KEY = import.meta.env.VITE_GROQ_API_KEY || "";
 
 export default function AiBioGenerator({ data, onBioGenerated }) {
   const [loading, setLoading] = useState(false);
@@ -10,7 +10,7 @@ export default function AiBioGenerator({ data, onBioGenerated }) {
 
   const generateBio = async () => {
     if (!API_KEY) {
-      setError('No API key found. Add VITE_GEMINI_API_KEY to your .env file.');
+      setError('No API key found. Add VITE_GROQ_API_KEY to your .env file.');
       return;
     }
 
@@ -23,8 +23,7 @@ export default function AiBioGenerator({ data, onBioGenerated }) {
     setError(null);
 
     try {
-      const genAI = new GoogleGenerativeAI(API_KEY);
-      const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+      const groq = new Groq({ apiKey: API_KEY, dangerouslyAllowBrowser: true });
 
       const skills = data.skills?.filter(Boolean).join(', ') || 'various technologies';
       const projects = data.projects?.map(p => p.title).filter(Boolean).join(', ') || '';
@@ -46,12 +45,16 @@ Requirements:
 - No bullet points, just a clean paragraph
 - No quotes around the output`;
 
-      const result = await model.generateContent(prompt);
-      const text = result.response.text().trim();
+      const chatCompletion = await groq.chat.completions.create({
+        messages: [{ role: 'user', content: prompt }],
+        model: 'llama-3.1-8b-instant',
+      });
+
+      const text = chatCompletion.choices[0]?.message?.content?.trim() || '';
       onBioGenerated(text);
     } catch (err) {
       console.error(err);
-      setError('Generation failed. Check your API key and try again.');
+      setError(`Generation failed: ${err.message || 'Unknown error'}`);
     } finally {
       setLoading(false);
     }

@@ -137,7 +137,7 @@ export default function TerminalTheme({ data }) {
         {/* Footer prompt */}
         <div className="flex items-center gap-2 text-xs font-mono text-green-900/80">
           <span>Built with</span>
-          <span className="text-green-700 font-bold">PortfolioGen</span>
+          <span className="text-green-700 font-bold">PortGen</span>
           <span className="inline-block w-2 h-4 bg-green-900 opacity-60 animate-pulse" />
         </div>
       </div>

@@ -6,6 +6,7 @@ const themes = [
   { id: 'minimal',  name: 'Minimal',  color: 'from-slate-400 to-slate-300' },
   { id: 'terminal', name: 'Terminal', color: 'from-green-500 to-emerald-400' },
   { id: 'creative', name: 'Creative', color: 'from-orange-500 to-pink-500' },
+  { id: 'neobrutalist', name: 'Neo Brutalist', color: 'from-yellow-400 to-red-500' },
 ];
 
 export default function TemplateSelector({ currentTheme, setCurrentTheme }) {

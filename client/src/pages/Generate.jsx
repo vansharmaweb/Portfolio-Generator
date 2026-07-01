@@ -21,6 +21,8 @@ const DEFAULT_DATA = {
   ],
   github: 'https://github.com/example',
   linkedin: 'https://linkedin.com/in/example',
+  resume: '',
+  customContacts: []
 };
 
 export default function Generate() {

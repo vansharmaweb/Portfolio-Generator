@@ -20,43 +20,60 @@ export async function deployToGithubPages(pat, repoName, htmlString, logCallback
       headers,
       body: JSON.stringify({
         name: repoName,
-        description: 'Auto-generated Portfolio by PortfolioGen',
+        description: 'Auto-generated Portfolio by PortGen',
         homepage: `https://${owner}.github.io/${repoName}/`,
         private: false,
         auto_init: true
       })
     });
     
-    // If the repo already exists natively, we can just proceed to updating index.html
+    let defaultBranch = 'main';
+
     if (createRepoResp.status === 422) {
       logCallback(`Repository ${repoName} already exists. Proceeding to update...`);
+      // Fetch the existing repo to get its default branch
+      const getRepoResp = await fetch(`https://api.github.com/repos/${owner}/${repoName}`, { headers });
+      if (getRepoResp.ok) {
+        const repoData = await getRepoResp.json();
+        defaultBranch = repoData.default_branch || 'main';
+      }
     } else if (!createRepoResp.ok) {
       throw new Error(`Failed to create repository: ${createRepoResp.statusText}`);
+    } else {
+      const repoData = await createRepoResp.json();
+      defaultBranch = repoData.default_branch || 'main';
     }
 
     // Give GitHub API a brief moment if repo was just created
-    await new Promise(r => setTimeout(r, 1000));
+    await new Promise(r => setTimeout(r, 1500));
 
     // 3. Push index.html to the repository
     logCallback('Pushing index.html to repository...');
     
     // Check if index.html already exists to get its SHA for update
     let sha = undefined;
-    const getFileResp = await fetch(`https://api.github.com/repos/${owner}/${repoName}/contents/index.html`, { headers });
+    const getFileResp = await fetch(`https://api.github.com/repos/${owner}/${repoName}/contents/index.html?ref=${defaultBranch}`, { headers });
     if (getFileResp.ok) {
       const fileData = await getFileResp.json();
       sha = fileData.sha;
     }
 
-    const encodedContent = btoa(unescape(encodeURIComponent(htmlString)));
+    // Robust Base64 encoding for potentially large UTF-8 strings
+    const blob = new Blob([htmlString], { type: 'text/html;charset=utf-8' });
+    const encodedContent = await new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result.split(',')[1]);
+      reader.readAsDataURL(blob);
+    });
     
     const pushResp = await fetch(`https://api.github.com/repos/${owner}/${repoName}/contents/index.html`, {
       method: 'PUT',
       headers,
       body: JSON.stringify({
-        message: 'Deploy Portfolio via PortfolioGen',
+        message: 'Deploy Portfolio via PortGen',
         content: encodedContent,
-        sha: sha
+        sha: sha,
+        branch: defaultBranch
       })
     });
 
@@ -69,14 +86,13 @@ export async function deployToGithubPages(pat, repoName, htmlString, logCallback
       method: 'POST',
       headers: {
         ...headers,
-        'Accept': 'application/vnd.github.switcheroo-preview+json' // Experimental preview header sometimes required
+        'Accept': 'application/vnd.github.v3+json' 
       },
       body: JSON.stringify({
-        source: { branch: 'main', path: '/' }
+        source: { branch: defaultBranch, path: '/' }
       })
     });
 
-    // It might fail if pages is already enabled or branch is master, handle gracefully
     if (!pagesResp.ok && pagesResp.status !== 409) {
       logCallback(`Note: Automatic Pages enablement ran into an issue (${pagesResp.status}). You might need to enable it manually in Repo Settings.`);
     } else {

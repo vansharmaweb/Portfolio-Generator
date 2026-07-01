@@ -116,7 +116,7 @@ export default function Minimal({ data }) {
 
         {/* Footer */}
         <footer className="pt-4 text-xs text-gray-300 tracking-widest uppercase text-center">
-          Built with PortfolioGen
+          Built with PortGen
         </footer>
       </div>
     </div>

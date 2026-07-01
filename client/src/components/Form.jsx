@@ -40,6 +40,21 @@ export default function Form({ data, setData }) {
     setData((prev) => ({ ...prev, projects: newProjects }));
   };
 
+  const handleContactAdd = () => {
+    setData((prev) => ({ ...prev, customContacts: [...(prev.customContacts || []), { name: '', link: '' }] }));
+  };
+
+  const handleContactChange = (index, field, value) => {
+    const newContacts = [...(data.customContacts || [])];
+    newContacts[index] = { ...newContacts[index], [field]: value };
+    setData((prev) => ({ ...prev, customContacts: newContacts }));
+  };
+
+  const handleContactRemove = (index) => {
+    const newContacts = (data.customContacts || []).filter((_, i) => i !== index);
+    setData((prev) => ({ ...prev, customContacts: newContacts }));
+  };
+
   return (
     <div className="p-6 lg:p-10 max-w-2xl mx-auto w-full space-y-12">
       <Section title="Personal Information">
@@ -67,9 +82,49 @@ export default function Form({ data, setData }) {
         </div>
       </Section>
 
-      <Section title="Social Links">
-        <Input label="GitHub URL" name="github" value={data.github} onChange={handleChange} placeholder="https://github.com/..." />
-        <Input label="LinkedIn URL" name="linkedin" value={data.linkedin} onChange={handleChange} placeholder="https://linkedin.com/in/..." />
+      <Section title="Social & Resume Links">
+        <Input label="Resume URL (PDF/Drive)" name="resume" value={data.resume || ''} onChange={handleChange} placeholder="https://..." />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <Input label="GitHub URL" name="github" value={data.github} onChange={handleChange} placeholder="https://github.com/..." />
+          <Input label="LinkedIn URL" name="linkedin" value={data.linkedin} onChange={handleChange} placeholder="https://linkedin.com/in/..." />
+        </div>
+        
+        <div className="space-y-4 pt-4 border-t border-slate-800">
+          <h3 className="text-sm font-medium text-slate-300">Custom Contact Options</h3>
+          {(data.customContacts || []).map((contact, index) => (
+            <div key={index} className="flex items-start gap-3 relative group">
+              <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-4">
+                <input
+                  type="text"
+                  value={contact.name}
+                  onChange={(e) => handleContactChange(index, 'name', e.target.value)}
+                  className="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-cyan-500 transition-colors"
+                  placeholder="Platform Name (e.g., Twitter)"
+                />
+                <input
+                  type="text"
+                  value={contact.link}
+                  onChange={(e) => handleContactChange(index, 'link', e.target.value)}
+                  className="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-cyan-500 transition-colors"
+                  placeholder="https://..."
+                />
+              </div>
+              <button
+                onClick={() => handleContactRemove(index)}
+                className="p-2.5 text-slate-500 hover:text-red-400 hover:bg-slate-800 rounded-lg transition-colors"
+                title="Remove contact"
+              >
+                <Trash2 className="w-5 h-5" />
+              </button>
+            </div>
+          ))}
+          <button
+            onClick={handleContactAdd}
+            className="flex items-center gap-2 text-sm text-cyan-400 hover:text-cyan-300 font-medium py-2 transition-colors"
+          >
+            <Plus className="w-4 h-4" /> Add Contact Option
+          </button>
+        </div>
       </Section>
 
       <Section title="Skills">

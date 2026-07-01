@@ -73,7 +73,7 @@ export default function DeployModal({ isOpen, onClose, data, currentTheme }) {
               <div className="space-y-1.5">
                 <label className="text-sm font-semibold text-slate-300 flex justify-between">
                   <span>Personal Access Token (PAT)</span>
-                  <a href="https://github.com/settings/tokens/new?scopes=repo,workflow&description=PortfolioGen" target="_blank" rel="noreferrer" className="text-cyan-400 hover:text-cyan-300 flex items-center gap-1">
+                  <a href="https://github.com/settings/tokens/new?scopes=repo,workflow&description=PortGen" target="_blank" rel="noreferrer" className="text-cyan-400 hover:text-cyan-300 flex items-center gap-1">
                     Get Token <ExternalLink className="w-3 h-3" />
                   </a>
                 </label>
