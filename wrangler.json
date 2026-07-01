@@ -1,5 +1,6 @@
 {
   "name": "portgen",
+  "main": "server/index.js",
   "compatibility_date": "2026-04-18",
   "assets": {
     "directory": "client/dist"

@@ -119,7 +119,9 @@ export default function AiBioGenerator({ data, onBioGenerated }) {
     
     // Check key configuration
     const activeKey = provider === 'groq' ? activeGroqKey : activeGeminiKey;
-    if (!activeKey) {
+    const canUseServerless = provider === 'groq'; // Default Groq proxy exists on server
+    
+    if (!activeKey && !canUseServerless) {
       setShowConfig(true);
       setError(`Please configure your ${provider === 'groq' ? 'Groq' : 'Gemini'} API key first.`);
       return;
@@ -156,13 +158,35 @@ Requirements:
       let text = '';
 
       if (provider === 'groq') {
-        // Groq SDK direct browser call
-        const groq = new Groq({ apiKey: activeKey, dangerouslyAllowBrowser: true });
-        const chatCompletion = await groq.chat.completions.create({
-          messages: [{ role: 'user', content: prompt }],
-          model: 'llama-3.1-8b-instant',
-        });
-        text = chatCompletion.choices[0]?.message?.content?.trim() || '';
+        if (activeKey) {
+          // Groq SDK direct browser call
+          const groq = new Groq({ apiKey: activeKey, dangerouslyAllowBrowser: true });
+          const chatCompletion = await groq.chat.completions.create({
+            messages: [{ role: 'user', content: prompt }],
+            model: 'llama-3.1-8b-instant',
+          });
+          text = chatCompletion.choices[0]?.message?.content?.trim() || '';
+        } else {
+          // Call the serverless proxy endpoint
+          const response = await fetch('/api/generate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              name: data.name,
+              role: data.role,
+              skills: data.skills,
+              projects: data.projects
+            })
+          });
+
+          if (!response.ok) {
+            const errData = await response.json().catch(() => ({}));
+            throw new Error(errData.error || `API Error (Status ${response.status})`);
+          }
+
+          const resData = await response.json();
+          text = resData.text?.trim() || '';
+        }
       } else {
         // Gemini API Direct Fetch call
         const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${activeKey}`, {
@@ -287,6 +311,21 @@ Requirements:
               {currentIsEnv ? (
                 <div className="bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-1.5 rounded-lg text-[11px] text-emerald-400 font-semibold">
                   Loaded from System Environment (.env)
+                </div>
+              ) : provider === 'groq' && !activeGroqKey ? (
+                <div className="space-y-2">
+                  <div className="bg-violet-500/10 border border-violet-500/20 px-2.5 py-1.5 rounded-lg text-[11px] text-violet-300 font-semibold">
+                    Using Secure System Proxy (No key required)
+                  </div>
+                  <div className="flex gap-1.5">
+                    <input
+                      type="password"
+                      placeholder="Or enter custom key: gsk_xxxxxx"
+                      value={tempKey}
+                      onChange={(e) => setTempKey(e.target.value)}
+                      className="flex-1 bg-slate-900 border border-slate-700/80 rounded-lg px-2 py-1.5 text-xs text-white focus:outline-none focus:border-violet-500"
+                    />
+                  </div>
                 </div>
               ) : (
                 <div className="flex gap-1.5">
