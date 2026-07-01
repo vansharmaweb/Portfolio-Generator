@@ -5,6 +5,8 @@ import MinimalTemplate from './PortfolioTemplates/Minimal';
 import TerminalTemplate from './PortfolioTemplates/TerminalTheme';
 import CreativeTemplate from './PortfolioTemplates/Creative';
 import NeoBrutalistTemplate from './PortfolioTemplates/NeoBrutalist';
+import ClaymorphicTemplate from './PortfolioTemplates/Claymorphic';
+import NordicForestTemplate from './PortfolioTemplates/NordicForest';
 import TemplateSelector from './TemplateSelector';
 import DeployModal from './DeployModal';
 import { Download, Rocket, FileCode2, Code, FileText } from 'lucide-react';
@@ -98,6 +100,8 @@ export default function Preview({ data, currentTheme, setCurrentTheme }) {
         {currentTheme === 'terminal' && <TerminalTemplate data={data} />}
         {currentTheme === 'creative' && <CreativeTemplate data={data} />}
         {currentTheme === 'neobrutalist' && <NeoBrutalistTemplate data={data} />}
+        {currentTheme === 'claymorphic' && <ClaymorphicTemplate data={data} />}
+        {currentTheme === 'nordicforest' && <NordicForestTemplate data={data} />}
       </div>
 
       <DeployModal

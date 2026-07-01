@@ -7,6 +7,8 @@ const themes = [
   { id: 'terminal', name: 'Terminal', color: 'from-green-500 to-emerald-400' },
   { id: 'creative', name: 'Creative', color: 'from-orange-500 to-pink-500' },
   { id: 'neobrutalist', name: 'Neo Brutalist', color: 'from-yellow-400 to-red-500' },
+  { id: 'claymorphic', name: 'Claymorphic', color: 'from-pink-400 to-indigo-500' },
+  { id: 'nordicforest', name: 'Nordic Forest', color: 'from-emerald-600 to-teal-500' },
 ];
 
 export default function TemplateSelector({ currentTheme, setCurrentTheme }) {
